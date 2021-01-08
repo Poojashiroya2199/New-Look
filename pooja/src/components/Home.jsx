@@ -5,7 +5,10 @@ import Products from "./Products";
 import "./../css/Home.css";
 import CartScreen from  "./CartScreen";
 import Signin from "./Singin";
+import { useSelector } from "react-redux";
+import Signup from "./Register";
 export default function Home(){
+    
     const [showsidebar,setsidebar]=useState(false);
         const openMenu=()=>{
             setsidebar(true);
@@ -13,8 +16,10 @@ export default function Home(){
     const closemenu=()=>{
         setsidebar(false);
     }
+
+    const userSignin=useSelector(state=>state.userSignin);
+    const {userInfo}=userSignin;
     return (
-    
     <div className="grid-container">
         <header className="header">
           <div className="menubtnname" >
@@ -26,7 +31,9 @@ export default function Home(){
           </div>
           <div >
               <Link to="/cart" className="headerlinks"> Cart</Link>
-              <Link to="/login" className="headerlinks">Sign In</Link>
+              { userInfo ? <Link to="/profile">{userInfo.name}</Link>:
+              <Link to="/signin" className="headerlinks">Sign In</Link>}
+              
           </div>
         </header>
          {/* <div > */}
@@ -46,6 +53,7 @@ export default function Home(){
             <div className="content">
                 <Route path="/api/products/:id"  exact component={Product}/>
                 <Route path="/signin" exact component={Signin} />
+                <Route path="/signup" exact component={Signup}/>
                 <Route path="/cart/:id?" component={CartScreen}/>
                 <Route path="/" exact component={Products}/>
 

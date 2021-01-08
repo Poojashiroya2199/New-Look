@@ -61,7 +61,7 @@ export default function Product(props){
                               {/* <Form1 arr={menuitem} val={qty} handleChange={handleChange}/> */}
                              Qty: <select value={qty} className="select" onChange={handleChange}>
                                  {[...Array(product.countInStock).keys()].map(x=>
-                                    <option key={x+1} value={x+1}>{x+1}</option>
+                                    <option key={x} value={x+1}>{x+1}</option>
                                     )}
                               </select>
                             </li>

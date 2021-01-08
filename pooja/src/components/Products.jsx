@@ -17,7 +17,7 @@ export default function Products(props){
     error?{error}:<ul className="products">
         {
             products.map((product)=>
-            <li key={product.id}>
+            <li key={product} >
             <div className="product">
             <Link to={"/api/products/"+product.id} className="link">
                 <img src={product.image} alt="image1" className="productimage"/>
