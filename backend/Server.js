@@ -5,8 +5,11 @@ import config from "./config";
 import mongoose from "mongoose";
 import userRoute from "./routes/userRoute";
 import bodyParser from "body-parser";
+// import fileUpload from "express-fileupload";
+// import productRoute from "./routes/productRoute";
+// import orderRoute from "./routes/orderRoute";
+// import path from "path";
 // console.log(data);
-const app=express();
 dotenv.config();
 const mongodbUrl=config.MONGODB_URL;
 mongoose.connect(mongodbUrl,{
@@ -15,6 +18,8 @@ mongoose.connect(mongodbUrl,{
     useCreateIndex:true
 }).catch(error=>console.log(error.reason));
 
+
+const app=express();
 app.use("/api/users",userRoute);
 app.use(bodyParser.json()); 
 

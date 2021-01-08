@@ -13,7 +13,8 @@ export default function Signin(props){
     
     useEffect(()=>{
         if(userInfo){
-            props.history.push("/")
+            props.history.push("/");
+            console.log(userInfo);
         }
         return (()=>{});
      },
@@ -32,8 +33,8 @@ export default function Signin(props){
                     <h2>Sign-In</h2>
                 </li>
                 <li>
-                    {loading ? <div>Loading...</div>:
-                    error ? <div>{error}</div>:""}
+                    {loading && <div>Loading...</div>}
+                    {error && <div>{error}</div>}
                 </li>
                 <li>
                     <label htmlFor="email">Email</label>
