@@ -30,8 +30,12 @@
     "nodemon": "^2.0.6"
   },
   "scripts": {
-    
-    "start": "nodemon --watch backend --exec babel-node backend/server.js"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b master -d build",
+    "start": "nodemon --watch backend --exec babel-node backend/server.js",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "author": "",
   "license": "ISC"
