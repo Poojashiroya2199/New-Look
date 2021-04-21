@@ -4,7 +4,7 @@ import "./../css/Home.css";
 import {useDispatch,  useSelector } from "react-redux";
 import {register } from "./../actions/userAction";
 
-export default function Signup(props){
+export default function RegisterScreen(props){
     const [name,setName]=useState("");
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
@@ -13,19 +13,20 @@ export default function Signup(props){
     const userRegister= useSelector(state=>state.userRegister);
     const {loading,userInfo,error}=userRegister;
     const dispatch=useDispatch();
-    
+    const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
+ 
     useEffect(()=>{
         if(userInfo){
-            props.history.push("/")
+            props.history.push(redirect);
         }
         return (()=>{});
      },
-       //  eslint-disable-next-line 
-              [userInfo]);
+     // eslint-disable-next-line
+      [userInfo]);
+
   const submitHandler=(e)=>{
       e.preventDefault();
-        dispatch(register(name,email,password));
-        console.log(email,password);
+      dispatch(register(name,email,password));
   }
 
     return <div className="form">
@@ -35,8 +36,8 @@ export default function Signup(props){
                     <h2>Create Account</h2>
                 </li>
                 <li>
-                    {loading ? <div>Loading...</div>:
-                    error ? <div>{error}</div>:""}
+                    {loading && <div>Loading...</div>}
+                   { error && <div>{error}</div>}
                 </li>
                 <li>
                     <label htmlFor="name">Name</label>
@@ -55,11 +56,11 @@ export default function Signup(props){
                     <input type="password" name="Confirm Password" id="rePassword" onChange={(e)=>setrePassword(e.target.value)}/>
                 </li>
                 <li>
-                    <button className="button primary full-width" type="submit">Sign-Up</button>
+                    <button className="button primary " type="submit">Register</button>
                 </li>
-                <li>Already have an account </li>
+                <li>Already have an account? </li>
                 <li>
-                    <Link to="/Register" className="button secondary textcenter link " >Login to your amazona Account</Link>
+                    <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className="button secondary textcenter link " >Create your amazona Account</Link>
                 </li>
             </ul>
         </form>

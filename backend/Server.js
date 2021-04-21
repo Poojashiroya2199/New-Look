@@ -5,12 +5,13 @@ import config from "./config";
 import mongoose from "mongoose";
 import userRoute from "./routes/userRoute";
 import bodyParser from "body-parser";
-// import fileUpload from "express-fileupload";
-// import productRoute from "./routes/productRoute";
-// import orderRoute from "./routes/orderRoute";
-// import path from "path";
+import path from 'path';
+import productRoute from './routes/productRoute';
+import orderRoute from './routes/orderRoute';
+import uploadRoute from './routes/uploadRoute';
+
 // console.log(data);
-dotenv.config();
+// dotenv.config();
 const mongodbUrl=config.MONGODB_URL;
 mongoose.connect(mongodbUrl,{
     useNewUrlParser:true,
@@ -20,21 +21,19 @@ mongoose.connect(mongodbUrl,{
 
 
 const app=express();
-app.use("/api/users",userRoute);
 app.use(bodyParser.json()); 
-
-app.get("/api/products",(req,res)=>{
-    res.send(data);
+app.use('/api/uploads', uploadRoute);
+app.use("/api/users",userRoute);
+app.use('/api/products', productRoute);
+app.use('/api/orders', orderRoute);
+app.get('/api/config/paypal', (req, res) => {
+  res.send(config.PAYPAL_CLIENT_ID);
 });
-app.get('/api/products/:id',(req,res)=>{
-    const id=req.params.id;
-    const product=data.find((item)=>item.id===parseInt(id));
-    if(!product){
-        res.status(404).send(`movie with id ${id} not found`);
-        return;
-    }
-    // console.log(product);
-    res.send(product);
+app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
+app.use(express.static(path.join(__dirname, '/../frontend/build')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
 });
 
-app.listen(5000,()=>console.log("server started at http://localhost:5000"));
+
+app.listen(8000,()=>console.log("server started at http://localhost:8000"));

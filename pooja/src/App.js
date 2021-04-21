@@ -8,15 +8,10 @@ function App() {
   return (
     <BrowserRouter>
     <div className="App">
-        {/* <Switch>
-        <Route path="/signup" exact component={Signup} /> 
-        <Route path="/login" exact component={Login} />  */}
         <Route
           path="/"
           render={(props) => <Home display={true} {...props} />}
         />
-         {/* <Redirect to="/login" /> */}
-         {/* </Switch> */}
     </div>
     </BrowserRouter>
   );
